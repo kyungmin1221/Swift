@@ -11,6 +11,7 @@ class ViewController: UIViewController {
     let timeSelector : Selector = #selector(ViewController.updateTime)    // timeSelector : 타이머가 구동되는 실행할 함수 지정
     let interval = 1.0      // 타이머의 간격 값 1초
     var count = 0       // 타이머가 설정한 간격대로 실행되는지 확인 하기 위한 변수
+    var alarmTime : String?
     
     
     @IBOutlet var lblCurrentTime: UILabel!   // 현재시간 아울렛변수 선언
@@ -32,6 +33,9 @@ class ViewController: UIViewController {
         formatter.dateFormat = "yyyy-MM-dd HH:mm EEE"    // 년 월 일 시 분 요일
         lblPickerTime.text =
         "선택시간: " + formatter.string(from:  datePickerView.date)
+        
+        formatter.dateFormat = "hh:mm aaa"
+        alarmTime = formatter.string(from: datePickerView.date)
     }
     
     // 타이머가 동작할 때 실행할 함수
@@ -43,6 +47,18 @@ class ViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm EEE"
         lblCurrentTime.text = "현재시간 : " + formatter.string(from: date as Date)
+        
+        formatter.dateFormat =  "hh:mm aaa"
+        let currentTime = formatter.string(for: date)
+        
+        if(alarmTime == currentTime)
+        {
+            view.backgroundColor = UIColor.red
+        }
+        else
+        {
+            view.backgroundColor = UIColor.white
+        }
     }
     
 }
